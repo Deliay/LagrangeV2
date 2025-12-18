@@ -1,12 +1,13 @@
-﻿FROM alpine:3.23 AS base
+﻿﻿FROM ubuntu:noble AS base
 USER root
+RUN apt update && apt install -y ca-certificates
+RUN apt install -y busybox && busybox --install
 USER $APP_UID
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
-RUN apk update && apk add build-base
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+RUN apt update && apt install -y gcc
 ARG BUILD_CONFIGURATION=Release
-ARG GIT_SHA=Unknown
 ENV DOCKER=true
 WORKDIR /src
 COPY ["Lagrange.Milky/Lagrange.Milky.csproj", "Lagrange.Milky/"]
@@ -18,11 +19,11 @@ COPY ["Lagrange.Milky.Implementation.Api.Generator/Lagrange.Milky.Implementation
 RUN dotnet restore "Lagrange.Milky/Lagrange.Milky.csproj"
 COPY . .
 WORKDIR "/src/Lagrange.Milky"
-RUN dotnet build "./Lagrange.Milky.csproj" -p:SourceRevisionId=$GIT_SHA -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Lagrange.Milky.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Lagrange.Milky.csproj" -p:SourceRevisionId=$GIT_SHA -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Lagrange.Milky.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

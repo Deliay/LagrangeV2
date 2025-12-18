@@ -20,7 +20,11 @@ internal static class Constants
 
     public static string ImplementationVersion = typeof(Constants).Assembly
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-        ?.InformationalVersion?[6..]
+#if DOCKER
+    ?.InformationalVersion
+#else
+    ?.InformationalVersion[6..]
+#endif
         ?? "Unknown";
 
     public static string MilkyVersion = "1.0";
