@@ -1,12 +1,10 @@
-﻿﻿FROM ubuntu:noble AS base
+﻿﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER root
-RUN apt update && apt install -y ca-certificates
-RUN apt install -y busybox && busybox --install
+RUN apt update && apt install -y busybox && busybox --install
 USER $APP_UID
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-RUN apt update && apt install -y gcc
 ARG BUILD_CONFIGURATION=Release
 ENV DOCKER=true
 WORKDIR /src
@@ -30,4 +28,4 @@ WORKDIR /app
 ENV DOCKER=true
 COPY --from=publish /app/publish .
 WORKDIR /data
-ENTRYPOINT ["/app/Lagrange.Milky"]
+ENTRYPOINT ["dotnet", "/app/Lagrange.Milky.dll"]
