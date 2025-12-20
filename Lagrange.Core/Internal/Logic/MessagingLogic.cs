@@ -60,6 +60,7 @@ internal class MessagingLogic(BotContext context) : ILogic
     {
         var (group, self) = await context.CacheContext.ResolveMember(groupUin, context.BotUin) ?? throw new InvalidTargetException(context.BotUin, groupUin);
         var message = await BuildMessage(chain, self, group);
+        
         var result = await context.EventContext.SendEvent<SendMessageEventResp>(new SendMessageEventReq(message));
 
         if (result == null) throw new InvalidOperationException();

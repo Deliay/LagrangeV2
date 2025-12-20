@@ -114,6 +114,52 @@ internal partial class TransElem
 [ProtoPackable]
 internal partial class CustomFace
 {
+    [ProtoMember(1)] public string Field1 { get; set; }
+    [ProtoMember(2)] public uint Field2 { get; set; }
+    [ProtoMember(3)] public string Field3 { get; set; }
+    [ProtoMember(5)] public uint Field4 { get; set; }
+    [ProtoMember(7)] public byte[] Field5 { get; set; }
+    
+    [ProtoMember(8)] public int Width { get; set; }
+    
+    [ProtoMember(9)] public int Height { get; set; }
+    
+    [ProtoMember(10)] public string Field10 { get; set; }
+    [ProtoMember(13)] public int Field13 { get; set; }
+    [ProtoMember(23)] public int Field23 { get; set; } // same with field#10
+    [ProtoMember(29)] public PbReserve29 Field29 { get; set; }
+    [ProtoMember(30)] public string Rkey { get; set; }
+
+    [ProtoPackable]
+    public partial class PbReserve29
+    {
+
+        [ProtoMember(1)] public int Field1 { get; set; }
+        [ProtoMember(3)] public int Field3 { get; set; }
+        [ProtoMember(4)] public int Field4 { get; set; }
+        
+        [ProtoPackable] public partial class Empty {}
+        [ProtoMember(9)] public Empty Field9 { get; set; }
+        [ProtoMember(10)] public int Field10 { get; set; }
+        [ProtoMember(12)] public Empty Field12 { get; set; }
+        [ProtoMember(18)] public Empty Field18 { get; set; }
+        [ProtoMember(19)] public Empty Field19 { get; set; }
+
+        public partial class PbReserve29S21
+        {
+            [ProtoMember(1)] public int Field1 { get; set; }
+            [ProtoMember(2)] public Empty Field2 { get; set; }
+            [ProtoMember(3)] public int Field3 { get; set; }
+            [ProtoMember(4)] public int Field4 { get; set; }
+            [ProtoMember(5)] public int Field5 { get; set; }
+            [ProtoMember(7)] public Empty Field7 { get; set; }
+        }
+    }
+}
+
+[ProtoPackable]
+internal partial class CustomFace30366
+{
     [ProtoMember(1)] public byte[] Guid { get; set; }
     
     [ProtoMember(2)] public string FilePath { get; set; }
