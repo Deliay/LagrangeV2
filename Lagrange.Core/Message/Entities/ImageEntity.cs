@@ -43,7 +43,7 @@ public class ImageEntity : RichMediaEntityBase
             _compat = result.Compat;
             MsgInfo = result.Info;
             
-            if (MsgInfo is not null && this.ImageSize != default)
+            if (MsgInfo is not null && this.ImageSize == default)
             {
                 var fileInfo = result.Info.MsgInfoBody[0].Index.Info;
                 this.ImageSize = new Vector2(fileInfo.Width, fileInfo.Height);
