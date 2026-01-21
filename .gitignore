@@ -11,3 +11,4 @@
 # Rider (and other IDEs that use .idea)
 /.idea
 /global.json
+*.DotSettings.user
